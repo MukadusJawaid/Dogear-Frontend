@@ -1,36 +1,21 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { viewport } from "@/lib/motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
+import { viewport } from "@/lib/motion";
 
 type Kind = "ring" | "disc" | "dots" | "paper" | "card" | "pill";
-type Props = {
-  kind: Kind;
-  className?: string;
-  float?: boolean;
-  /** Parallax distance in px over the page scroll. Negative drifts up. */ speed?: number;
-};
+type Props = { kind: Kind; className?: string; float?: boolean };
 
-const speeds: Record<Kind, number> = {
-  pill: -40,
-  ring: -120,
-  disc: -200,
-  dots: -60,
-  paper: -160,
-  card: -140,
-};
+const fade = { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport };
+const fadeTransition = { opacity: { duration: 0.9 } };
 
-/** Decorative background shape: drifts on its own and shifts with scroll (parallax). Position it with className. */
-export function Decor({ kind, className, float = true, speed }: Props) {
-  const ref = useRef<HTMLSpanElement>(null);
-  // Parallax is relative to the shape's own position, so it never drifts out of its section.
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const reach = Math.abs(speed ?? speeds[kind]) / 4;
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [reach, -reach]);
-  const fade = { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport };
-  const drift = float ? { x: [0, 10, 0], scale: [1, 1.04, 1] } : undefined;
+/**
+ * Purely decorative background shape. Fades in with its section and drifts gently.
+ * (No scroll-linked parallax: element-targeted useScroll was fragile under Next's hidden-route
+ * preservation and cost one scroll tracker per shape.) Position/size it with className.
+ */
+export function Decor({ kind, className, float = true }: Props) {
   const bobTransition = {
     duration: 6 + (kind.length % 3),
     repeat: Infinity,
@@ -40,11 +25,9 @@ export function Decor({ kind, className, float = true, speed }: Props) {
   if (kind === "card" || kind === "paper") {
     return (
       <motion.span
-        ref={ref}
         aria-hidden
         {...fade}
-        transition={{ opacity: { duration: 0.9 } }}
-        style={{ y: parallaxY }}
+        transition={fadeTransition}
         className={cn("pointer-events-none absolute", className)}
       >
         {kind === "card" ? (
@@ -71,7 +54,7 @@ export function Decor({ kind, className, float = true, speed }: Props) {
     );
   }
 
-  // ring / disc / dots: a single element so colour + size classes from the caller apply directly.
+  // ring / disc / dots / pill: a single element so colour + size classes from the caller apply directly.
   const look = {
     pill: "h-3.5 w-24 rounded-full bg-surface-4",
     ring: "rounded-full border border-amber/60",
@@ -81,12 +64,10 @@ export function Decor({ kind, className, float = true, speed }: Props) {
 
   return (
     <motion.span
-      ref={ref}
       aria-hidden
       {...fade}
-      style={{ y: parallaxY }}
-      animate={drift}
-      transition={{ default: bobTransition, opacity: { duration: 0.9 } }}
+      animate={float ? { x: [0, 10, 0], scale: [1, 1.04, 1] } : undefined}
+      transition={{ default: bobTransition, ...fadeTransition }}
       className={cn("pointer-events-none absolute", look, className)}
     />
   );
