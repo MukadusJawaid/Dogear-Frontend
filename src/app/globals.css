@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+@import "../styles/colors.css";
+@import "../styles/typography.css";
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    /* Sticky header is two rows below lg: keep scroll targets (route changes, #anchors) clear of it. */
+    scroll-padding-top: 8rem;
+  }
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 6rem;
+    }
+  }
+
+  body {
+    background: var(--dg-canvas);
+    color: var(--dg-ink);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Tailwind 4 no longer sets a pointer cursor on buttons — restore it for every clickable element. */
+  button:not(:disabled),
+  [role="button"],
+  [role="tab"],
+  a[href],
+  summary,
+  select,
+  label[for] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Thin, theme-aware scrollbar */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--dg-line-strong) var(--dg-canvas);
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--dg-canvas);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--dg-line-strong);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--dg-line-faint);
+  }
+
+  ::selection {
+    background: var(--dg-amber-wash);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

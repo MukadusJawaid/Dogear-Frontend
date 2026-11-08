@@ -1,0 +1,66 @@
+/*
+ * Typography scale — every font size used by the designs, as fluid CSS variables.
+ * Values are clamp(mobile, fluid, desktop). Desktop maxima come from the design exports
+ * (now scaled down: hero 60px, section title 38px, card titles 22/18/17px, body 18/16/15/14px, label 11px).
+ * tailwind.config.ts maps these to utilities: text-display, text-h1 … text-caption.
+ * To tune responsiveness, change the numbers here — nothing else.
+ */
+:root {
+  /* Display & headings */
+  --fs-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); /* 60px */
+  --lh-display: 1;
+  --ls-display: -0.021em;
+
+  --fs-h1: clamp(2rem, 1.6rem + 1.8vw, 3rem); /* 48px */
+  --lh-h1: 1.1;
+  --ls-h1: -0.02em;
+
+  --fs-h2: clamp(1.75rem, 1.4rem + 1.3vw, 2.375rem); /* 38px */
+  --lh-h2: 1.08;
+  --ls-h2: -0.017em;
+
+  --fs-h3: clamp(1.25rem, 1.15rem + 0.4vw, 1.375rem); /* 22px */
+  --lh-h3: 1.15;
+  --ls-h3: -0.01em;
+
+  --fs-h4: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 18px */
+  --lh-h4: 1.25;
+
+  --fs-h5: 1.0625rem; /* 17px */
+  --lh-h5: 1.3;
+
+  /* Body */
+  --fs-body-xl: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 18px */
+  --lh-body-xl: 1.55;
+  --fs-body-lg: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem); /* 16px */
+  --lh-body-lg: 1.6;
+  --fs-body: 0.9375rem; /* 15px */
+  --lh-body: 1.6;
+  --fs-body-sm: 0.875rem; /* 14px */
+  --lh-body-sm: 1.55;
+  --fs-caption: 0.8125rem; /* 13px */
+  --lh-caption: 1.55;
+  --fs-micro: 0.6875rem; /* 11px */
+  --lh-micro: 1.4;
+
+  /* Labels */
+  --fs-eyebrow: 0.6875rem; /* 11px, mono, tracked */
+  --lh-eyebrow: 1;
+  --ls-eyebrow: 0.1em;
+  --fs-button: 0.875rem; /* 14px */
+  --fs-button-sm: 0.8125rem; /* 13px */
+  --fs-stat: clamp(2.25rem, 1.8rem + 1.8vw, 3.25rem); /* 52px */
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}

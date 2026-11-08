@@ -1,0 +1,54 @@
+/*
+ * Colour tokens as CSS variables — the single source of truth for theming.
+ * Components never use hex; they use Tailwind classes (bg-canvas, text-ink…) that read these vars.
+ * To add a theme (e.g. light): add a `[data-theme="light"] { … }` block overriding the same names,
+ * then toggle `data-theme` on <html>. No component changes needed.
+ */
+:root,
+[data-theme="dark"] {
+  /* Surfaces */
+  --dg-canvas: #090a0f;
+  --dg-canvas-deep: #05060a;
+  --dg-surface: #0e1017;
+  --dg-surface-2: #12141c;
+  --dg-surface-3: #171a24;
+  --dg-surface-4: #1a1d29;
+
+  /* Lines */
+  --dg-line: #232733;
+  --dg-line-strong: #2a2f40;
+  --dg-line-faint: #3a3f52;
+
+  /* Text */
+  --dg-ink: #f3f4f6;
+  --dg-ink-soft: #9aa1b8;
+  --dg-ink-muted: #8a91a8;
+  --dg-ink-faint: #5d647c;
+
+  /* Brand */
+  --dg-amber: #ffb454;
+  --dg-amber-hover: #ffc377;
+  --dg-amber-ink: #1a1004;
+  --dg-amber-tint: #ffe5bd;
+  --dg-amber-wash: rgb(255 180 84 / 0.14);
+  --dg-amber-deep: #2b2118;
+  --dg-amber-end: #e39b4a;
+  --dg-amber-soft: #f5b765; /* flat CTA band */
+
+  /* Status */
+  --dg-periwinkle: #7d8bc2;
+  --dg-success: #5fbf8f;
+  --dg-success-deep: #2f5d50;
+
+  /* Mock product canvases (illustrations of customer sites — theme independent) */
+  --dg-mock-cream: #f3ebdd;
+  --dg-mock-blue: #dbe5f1;
+  --dg-mock-sand: #f1e6d6;
+  --dg-mock-sage: #e6ede6;
+  --dg-mock-ink: #2a1f12;
+  --dg-mock-green: #2f5d50;
+
+  /* Effects */
+  --dg-glow: rgb(255 180 84 / 0.1);
+  --dg-shadow-frame: 0 40px 120px -30px rgb(0 0 0 / 0.8);
+}
