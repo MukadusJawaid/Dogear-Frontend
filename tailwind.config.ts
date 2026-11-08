@@ -7,7 +7,10 @@ import type { Config } from "tailwindcss";
  */
 const v = (name: string) => `var(--${name})`;
 
-const type = (name: string, ls?: boolean): [string, { lineHeight: string; letterSpacing?: string }] => [
+const type = (
+  name: string,
+  ls?: boolean,
+): [string, { lineHeight: string; letterSpacing?: string }] => [
   v(`fs-${name}`),
   { lineHeight: v(`lh-${name}`), ...(ls ? { letterSpacing: v(`ls-${name}`) } : {}) },
 ];
@@ -54,9 +57,19 @@ const config: Config = {
     extend: {
       colors: {
         canvas: { DEFAULT: v("dg-canvas"), deep: v("dg-canvas-deep") },
-        surface: { DEFAULT: v("dg-surface"), 2: v("dg-surface-2"), 3: v("dg-surface-3"), 4: v("dg-surface-4") },
+        surface: {
+          DEFAULT: v("dg-surface"),
+          2: v("dg-surface-2"),
+          3: v("dg-surface-3"),
+          4: v("dg-surface-4"),
+        },
         line: { DEFAULT: v("dg-line"), strong: v("dg-line-strong"), faint: v("dg-line-faint") },
-        ink: { DEFAULT: v("dg-ink"), soft: v("dg-ink-soft"), muted: v("dg-ink-muted"), faint: v("dg-ink-faint") },
+        ink: {
+          DEFAULT: v("dg-ink"),
+          soft: v("dg-ink-soft"),
+          muted: v("dg-ink-muted"),
+          faint: v("dg-ink-faint"),
+        },
         amber: {
           DEFAULT: v("dg-amber"),
           hover: v("dg-amber-hover"),
@@ -81,10 +94,18 @@ const config: Config = {
       maxWidth: { site: "1120px" },
       boxShadow: { frame: v("dg-shadow-frame") },
       keyframes: {
-        "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
-        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
+        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
       animation: {
+        "fade-in": "fade-in 0.35s ease-out",
         "accordion-down": "accordion-down 0.3s cubic-bezier(0.22,1,0.36,1)",
         "accordion-up": "accordion-up 0.25s cubic-bezier(0.22,1,0.36,1)",
       },
